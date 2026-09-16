@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Azimjon | Python & Django Developer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: #0b0317;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(190, 75, 255, 0.12), transparent 65%);
+            top: -250px;
+            left: -200px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 80, 180, 0.10), transparent 65%);
+            right: -250px;
+            bottom: -200px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            width: min(1100px, 90%);
+            margin: auto;
+        }
+
+        /* NAVBAR */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(11, 3, 23, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        nav {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            background: linear-gradient(90deg, #ff66c4, #a66cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            color: #e8dff0;
+            transition: .3s;
+        }
+
+        .nav-links a:hover {
+            color: #ff73c8;
+        }
+
+        .nav-btn {
+            padding: 13px 25px;
+            border-radius: 30px;
+            background: linear-gradient(100deg, #ff62bb, #a66cff);
+            font-weight: 700;
+            font-size: 13px;
+            box-shadow: 0 0 30px rgba(220, 90, 255, .18);
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: linear-gradient(to bottom, black, transparent);
+            z-index: -1;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .badge {
+            display: inline-block;
+            border: 1px solid #c95de7;
+            padding: 9px 18px;
+            border-radius: 30px;
+            font-size: 12px;
+            letter-spacing: 1.5px;
+            color: #f4b4ff;
+            margin-bottom: 25px;
+            background: rgba(190, 70, 255, .06);
+        }
+
+        .hero h1 {
+            font-size: clamp(45px, 7vw, 82px);
+            line-height: 1.02;
+            letter-spacing: -4px;
+            margin-bottom: 25px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #ff72c8, #b56cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: #a99bb7;
+            max-width: 650px;
+            margin: auto;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .hero-buttons {
+            margin-top: 35px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 15px 27px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 700;
+            transition: .3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(100deg, #ff65bd, #a96cff);
+        }
+
+        .btn-secondary {
+            border: 1px solid rgba(255,255,255,.25);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        /* SECTION */
+
+        section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 55px;
+        }
+
+        .section-title small {
+            color: #ff70c7;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .section-title h2 {
+            font-size: 40px;
+            margin-top: 12px;
+        }
+
+        .section-title p {
+            color: #94879f;
+            margin-top: 12px;
+        }
+
+        /* ABOUT */
+
+        .about {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .card {
+            background: linear-gradient(
+                145deg,
+                rgba(255,255,255,.07),
+                rgba(255,255,255,.025)
+            );
+            border: 1px solid rgba(255,255,255,.09);
+            border-radius: 25px;
+            padding: 35px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            background: #b94dff;
+            filter: blur(100px);
+            opacity: .12;
+            top: -100px;
+            right: -80px;
+        }
+
+        .card h3 {
+            font-size: 23px;
+            margin-bottom: 17px;
+        }
+
+        .card p {
+            color: #a79aaa;
+            line-height: 1.8;
+        }
+
+        /* SKILLS */
+
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+        }
+
+        .skill {
+            padding: 25px 15px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 20px;
+            background: rgba(255,255,255,.035);
+            transition: .3s;
+        }
+
+        .skill:hover {
+            transform: translateY(-7px);
+            border-color: #bc65e9;
+            background: rgba(190,80,255,.08);
+        }
+
+        .skill-icon {
+            font-size: 35px;
+            margin-bottom: 12px;
+        }
+
+        .skill h3 {
+            font-size: 14px;
+        }
+
+        .skill p {
+            color: #877a91;
+            font-size: 11px;
+            margin-top: 6px;
+        }
+
+        /* PROJECTS */
+
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .project {
+            min-height: 300px;
+            border-radius: 25px;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,.09);
+            background:
+                radial-gradient(circle at top right, rgba(190,70,255,.2), transparent 35%),
+                rgba(255,255,255,.035);
+            transition: .35s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project:hover {
+            transform: translateY(-8px);
+            border-color: rgba(207,102,255,.5);
+        }
+
+        .project-number {
+            font-size: 13px;
+            color: #ff6dc3;
+        }
+
+        .project h3 {
+            font-size: 28px;
+            margin: 45px 0 15px;
+        }
+
+        .project p {
+            color: #9d91a7;
+            line-height: 1.7;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 25px;
+        }
+
+        .tag {
+            font-size: 11px;
+            padding: 7px 11px;
+            border-radius: 20px;
+            background: rgba(255,255,255,.07);
+            color: #d9cce1;
+        }
+
+        /* SERVICES */
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .service {
+            padding: 35px;
+            border-radius: 25px;
+            border: 1px solid rgba(255,255,255,.08);
+            background: rgba(255,255,255,.035);
+        }
+
+        .service-icon {
+            font-size: 35px;
+            margin-bottom: 20px;
+        }
+
+        .service h3 {
+            margin-bottom: 12px;
+        }
+
+        .service p {
+            color: #978b9f;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        /* CONTACT */
+
+        .contact-box {
+            text-align: center;
+            padding: 70px 30px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,.1);
+            background:
+                radial-gradient(circle at center, rgba(195,75,255,.15), transparent 55%),
+                rgba(255,255,255,.03);
+        }
+
+        .contact-box h2 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .contact-box p {
+            color: #9d91a7;
+            margin-bottom: 30px;
+        }
+
+        .socials {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .social {
+            padding: 12px 20px;
+            border-radius: 20px;
+            background: rgba(255,255,255,.07);
+            font-size: 13px;
+            transition: .3s;
+        }
+
+        .social:hover {
+            background: rgba(200,80,255,.2);
+        }
+
+        /* FOOTER */
+
+        footer {
+            border-top: 1px solid rgba(255,255,255,.08);
+            padding: 30px 0;
+            text-align: center;
+            color: #6f6378;
+            font-size: 13px;
+        }
+
+        /* MOBILE */
+
+        @media(max-width: 850px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .about,
+            .projects {
+                grid-template-columns: 1fr;
+            }
+
+            .skills {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .services {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+        }
+
+        @media(max-width: 500px) {
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .skills {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .section-title h2 {
+                font-size: 32px;
+            }
+
+            .contact-box h2 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="container">
+        <nav>
+
+            <a href="#" class="logo">
+                <span>AZ</span>IMJON.
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="#home">Bosh sahifa</a></li>
+                <li><a href="#about">Men haqimda</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Portfolio</a></li>
+                <li><a href="#services">Xizmatlar</a></li>
+                <li><a href="#contact">Aloqa</a></li>
+            </ul>
+
+            <a href="#contact" class="nav-btn">
+                BOSHLASH
+            </a>
+
+        </nav>
+    </div>
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+    <div class="hero-grid"></div>
+
+    <div class="container">
+
+        <div class="hero-content">
+
+            <div class="badge">
+                “KELAJAKNI KOD BILAN YARATAMAN”
+            </div>
+
+            <h1>
+                Salom, men <br>
+                <span class="gradient-text">Azimjon</span>
+            </h1>
+
+            <p>
+                Python va Django yordamida zamonaviy web saytlar,
+                REST API va Telegram botlar yarataman.
+                Men g‘oyalarni haqiqiy raqamli mahsulotlarga aylantirishga
+                qiziqaman.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="#projects" class="btn btn-primary">
+                    LOYIHALARIM →
+                </a>
+
+                <a href="#contact" class="btn btn-secondary">
+                    MEN BILAN BOG‘LANISH
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ABOUT -->
+
+<section id="about">
+
+    <div class="container">
+
+        <div class="section-title">
+            <small>MEN HAQIMDA</small>
+            <h2>Kod yozish — mening ishim</h2>
+            <p>Texnologiya, kreativlik va yangi g‘oyalar.</p>
+        </div>
+
+        <div class="about">
+
+            <div class="card">
+
+                <h3>👨‍💻 Men kimman?</h3>
+
+                <p>
+                    Men Python va Django yo‘nalishida rivojlanayotgan
+                    dasturchiman. Web dasturlash, backend, API va
+                    Telegram botlar yaratishga qiziqaman.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <h3>🚀 Maqsadim</h3>
+
+                <p>
+                    Har kuni yangi texnologiyalarni o‘rganish,
+                    real loyihalar yaratish va professional
+                    backend developer bo‘lish.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SKILLS -->
+
+<section id="skills">
+
+    <div class="container">
+
+        <div class="section-title">
+            <small>MY SKILLS</small>
+            <h2>Texnologiyalar</h2>
+            <p>Men ishlatadigan asosiy texnologiyalar.</p>
+        </div>
+
+        <div class="skills">
+
+            <div class="skill">
+                <div class="skill-icon">🐍</div>
+                <h3>Python</h3>
+                <p>Backend</p>
+            </div>
+
+            <div class="skill">
+                <div class="skill-icon">🎸</div>
+                <h3>Django</h3>
+                <p>Web Framework</p>
+            </div>
+
+            <div class="skill">
+                <div class="skill-icon">⚡</div>
+                <h3>DRF</h3>
+                <p>REST API</p>
+            </div>
+
+            <div class="skill">
+                <div class="skill-icon">🗄️</div>
+                <h3>PostgreSQL</h3>
+                <p>Database</p>
+            </div>
+
+            <div class="skill">
+                <div class="skill-icon">🤖</div>
+                <h3>Aiogram</h3>
+                <p>Telegram Bot</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PROJECTS -->
+
+<section id="projects">
+
+    <div class="container">
+
+        <div class="section-title">
+            <small>PORTFOLIO</small>
+            <h2>So‘nggi loyihalarim</h2>
+            <p>Amaliyot davomida yaratgan loyihalarim.</p>
+        </div>
+
+        <div class="projects">
+
+            <div class="project">
+
+                <div class="project-number">01 / PROJECT</div>
+
+                <h3>🎬 Kino Bot</h3>
+
+                <p>
+                    Telegram orqali kino kodini yuborib,
+                    kerakli film va qismlarni olish imkonini
+                    beruvchi Telegram bot.
+                </p>
+
+                <div class="tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">Aiogram</span>
+                    <span class="tag">SQLite</span>
+                    <span class="tag">FSM</span>
+                </div>
+
+            </div>
+
+
+            <div class="project">
+
+                <div class="project-number">02 / PROJECT</div>
+
+                <h3>⚽ Football Hub</h3>
+
+                <p>
+                    Futbol jamoalari, futbolchilar, ligalar va
+                    o‘yinlar haqida ma’lumot ko‘rsatadigan
+                    Django web loyiha.
+                </p>
+
+                <div class="tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">Django</span>
+                    <span class="tag">HTML</span>
+                    <span class="tag">CSS</span>
+                </div>
+
+            </div>
+
+
+            <div class="project">
+
+                <div class="project-number">03 / PROJECT</div>
+
+                <h3>🛒 Mini Marketplace</h3>
+
+                <p>
+                    Mahsulotlar va kategoriyalar bilan ishlash
+                    uchun yaratilgan zamonaviy marketplace
+                    loyihasi.
+                </p>
+
+                <div class="tags">
+                    <span class="tag">Django</span>
+                    <span class="tag">Python</span>
+                    <span class="tag">Database</span>
+                </div>
+
+            </div>
+
+
+            <div class="project">
+
+                <div class="project-number">04 / PROJECT</div>
+
+                <h3>☕ Coffee Bot</h3>
+
+                <p>
+                    Kofe buyurtma qilish, ism va telefon raqamini
+                    olish hamda buyurtmani administratorga yuborish
+                    imkoniyatiga ega bot.
+                </p>
+
+                <div class="tags">
+                    <span class="tag">Aiogram</span>
+                    <span class="tag">Python</span>
+                    <span class="tag">FSM</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SERVICES -->
+
+<section id="services">
+
+    <div class="container">
+
+        <div class="section-title">
+            <small>XIZMATLAR</small>
+            <h2>Nimalar qila olaman?</h2>
+        </div>
+
+        <div class="services">
+
+            <div class="service">
+
+                <div class="service-icon">🌐</div>
+
+                <h3>Web Development</h3>
+
+                <p>
+                    Django yordamida zamonaviy va funksional
+                    web saytlar yaratish.
+                </p>
+
+            </div>
+
+
+            <div class="service">
+
+                <div class="service-icon">🤖</div>
+
+                <h3>Telegram Bots</h3>
+
+                <p>
+                    Aiogram yordamida foydali va avtomatlashtirilgan
+                    Telegram botlar yaratish.
+                </p>
+
+            </div>
+
+
+            <div class="service">
+
+                <div class="service-icon">⚡</div>
+
+                <h3>REST API</h3>
+
+                <p>
+                    Django REST Framework yordamida API yaratish
+                    va boshqa dasturlar bilan integratsiya qilish.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CONTACT -->
+
+<section id="contact">
+
+    <div class="container">
+
+        <div class="contact-box">
+
+            <h2>Birgalikda loyiha qilamizmi?</h2>
+
+            <p>
+                Agar sizda qiziqarli g‘oya bo‘lsa,
+                men bilan bog‘laning.
+            </p>
+
+            <a
+                href="https://t.me/paukjann"
+                target="_blank"
+                class="btn btn-primary"
+            >
+                TELEGRAMGA YOZISH →
+            </a>
+
+            <div class="socials">
+
+                <a
+                    href="https://github.com/azimjon011321"
+                    target="_blank"
+                    class="social"
+                >
+                    GitHub
+                </a>
+
+                <a
+                    href="https://t.me/paukjann"
+                    target="_blank"
+                    class="social"
+                >
+                    Telegram
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    © 2026 Azimjon. Barcha huquqlar himoyalangan.
+
+</footer>
+
+
+</body>
+</html>
